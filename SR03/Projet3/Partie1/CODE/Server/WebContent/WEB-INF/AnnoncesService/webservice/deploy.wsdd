@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from AnnoncesService WSDL service -->
+
+  <service name="Annonces" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservice"/>
+      <parameter name="wsdlServiceElement" value="AnnoncesService"/>
+      <parameter name="schemaQualified" value="http://webservice"/>
+      <parameter name="wsdlServicePort" value="Annonces"/>
+      <parameter name="className" value="webservice.Annonces"/>
+      <parameter name="wsdlPortType" value="Annonces"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://webservice" xmlns:retNS="http://webservice" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getAd" qname="operNS:getAd" returnQName="retNS:getAdReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:annonce_id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservice" xmlns:retNS="http://webservice" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateAd" qname="operNS:updateAd" returnQName="retNS:updateAdReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:annonce_id" type="tns:int"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:categorie_id" type="tns:int"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rue" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:ville" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:codepostal" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:telephone" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservice" xmlns:retNS="http://webservice" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getAllAd" qname="operNS:getAllAd" returnQName="retNS:getAllAdReturn" returnType="rtns:string" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://webservice" xmlns:retNS="http://webservice" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createAd" qname="operNS:createAd" returnQName="retNS:createAdReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:categorie_id" type="tns:int"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rue" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:ville" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:codepostal" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:telephone" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservice" xmlns:retNS="http://webservice" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="deleteAd" qname="operNS:deleteAd" returnQName="retNS:deleteAdReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:annonce_id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservice" xmlns:retNS="http://webservice" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getByParams" qname="operNS:getByParams" returnQName="retNS:getByParamsReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:categoryName" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:street" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:city" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:postcode" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="getAd deleteAd updateAd getAllAd getByParams createAd"/>
+
+  </service>
+</deployment>

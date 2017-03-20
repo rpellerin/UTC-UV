@@ -1,0 +1,3 @@
+Soutenance :
+Comme je vous l'ai dit pendant les TDs, on ira vérifier que les fonctionnalités que vous avez décidé d’implémenter marchent bien, et on ne regardera pas la partie esthétique ou d'ergonomie.
+Il faudra, même pendant la soutenance, justifier les choix d’implémentation que vous avez fait, montrer comment vous avez partagé la charge de travail, ainsi que montrer une petit démo de votre mini-projet. 

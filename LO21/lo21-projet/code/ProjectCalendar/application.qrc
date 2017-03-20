@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/images/icon.png</file>
+        <file>assets/images/leftanglearrow.png</file>
+        <file>assets/images/rightanglearrow.png</file>
+        <file>assets/TABLES.sql</file>
+    </qresource>
+</RCC>

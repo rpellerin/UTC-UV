@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>700</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Project Calendar</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../application.qrc">
+    <normaloff>:/assets/images/icon.png</normaloff>:/assets/images/icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="Agenda">
+       <attribute name="title">
+        <string>Agenda</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QWidget" name="widget_2" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="prev_week">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../application.qrc">
+               <normaloff>:/assets/images/leftanglearrow.png</normaloff>:/assets/images/leftanglearrow.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="choose_week"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="next_week">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../application.qrc">
+               <normaloff>:/assets/images/rightanglearrow.png</normaloff>:/assets/images/rightanglearrow.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="agenda_widget">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectItems</enum>
+          </property>
+          <row>
+           <property name="text">
+            <string>00:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>01:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>02:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>03:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>04:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>05:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>06:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>07:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>08:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>09:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>10:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>11:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>12:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>13:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>14:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>15:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>16:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>17:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>18:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>19:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>20:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>21:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>22:00</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>23:00</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Lundi</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Mardi</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Mercredi</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Jeudi</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Vendredi</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Samedi</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Dimanche</string>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string/>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="Projets">
+       <attribute name="title">
+        <string>Projets</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QTreeWidget" name="treeWidget">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Nom</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Date de disponiblité</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Durée</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Échéance</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>État</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Ajouter</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="ajouterProjet">
+             <property name="text">
+              <string>Un projet</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ajouterTacheC">
+             <property name="text">
+              <string>Une tâche composite</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ajouterTacheU">
+             <property name="text">
+              <string>Une tâche unitaire</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ajouterTacheUP">
+             <property name="text">
+              <string>Une taĉhe unitaire préemptable</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Autres actions</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="exportProgProjet">
+             <property name="text">
+              <string>Exporter les programmations de ce projet</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>700</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFichiers">
+    <property name="title">
+     <string>&amp;Fichier</string>
+    </property>
+    <addaction name="actionExporter_en_XML"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menuOutils">
+    <property name="title">
+     <string>Outils</string>
+    </property>
+    <addaction name="actionSupprimes_les_v_nements"/>
+    <addaction name="actionSupprimer_les_projets_et_t_ches"/>
+   </widget>
+   <addaction name="menuFichiers"/>
+   <addaction name="menuOutils"/>
+  </widget>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionExporter_en_XML">
+   <property name="text">
+    <string>Exporter la semaine en XML</string>
+   </property>
+  </action>
+  <action name="actionSupprimes_les_v_nements">
+   <property name="text">
+    <string>Supprimes les événements</string>
+   </property>
+  </action>
+  <action name="actionSupprimer_les_projets_et_t_ches">
+   <property name="text">
+    <string>Supprimer les projets et tâches</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>prev_week</tabstop>
+  <tabstop>next_week</tabstop>
+  <tabstop>agenda_widget</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../application.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionQuitter</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>agenda_widget</sender>
+   <signal>cellClicked(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>cellClicked(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>next_week</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>nextWeek()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>679</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>prev_week</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>prevWeek()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>choose_week</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setWeek(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ajouterProjet</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>nouveauProjet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidget</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onTreeWidgetItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ajouterTacheC</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>nouvelleTacheComposite()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ajouterTacheU</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>nouvelleTacheUnitaire()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>393</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ajouterTacheUP</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>nouvelleTacheUnitairePreemptable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExporter_en_XML</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportXML()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exportProgProjet</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportProjetXML()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>409</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSupprimer_les_projets_et_t_ches</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteProjets()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSupprimes_les_v_nements</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteEvents()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>cellClicked(int,int)</slot>
+  <slot>prevWeek()</slot>
+  <slot>nextWeek()</slot>
+  <slot>setWeek(int)</slot>
+  <slot>nouveauProjet()</slot>
+  <slot>onTreeWidgetItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>nouvelleTacheComposite()</slot>
+  <slot>nouvelleTacheUnitaire()</slot>
+  <slot>nouvelleTacheUnitairePreemptable()</slot>
+  <slot>exportXML()</slot>
+  <slot>exportProjetXML()</slot>
+  <slot>deleteEvents()</slot>
+  <slot>deleteProjets()</slot>
+ </slots>
+</ui>

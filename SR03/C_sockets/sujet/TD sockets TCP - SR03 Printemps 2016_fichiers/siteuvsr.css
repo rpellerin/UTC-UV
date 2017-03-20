@@ -1,0 +1,52 @@
+/* siteuvsr.css */
+
+P.dummy{ Background-Color: #00EEFF;
+}
+
+body { Background-Color: #E6FFFF; font-size:14pt;
+}
+pre { Background-Color: #E6FFFF; font-size:12pt;
+}
+pre.ja { Background-Color: #FFFF66; font-size:12pt;
+}
+pre.pbl { Background-Color: #E6FFFF; font-size:12pt;
+	margin:5px; padding:6px;
+}
+
+code { Background-Color: #E6FFFF; font-size:12pt;
+}
+
+#tit2{ Background-Color: #CCFFFF; color: black; width: 80%;
+        font-size:14pt; font-weight: bold;
+        padding:5px; border-width:3px; border-style: ridge; 
+	border-color: white;
+    }
+#tit1 { Background-Color: #00EEFF; color: black; width: auto;
+        font-size:14pt; font-weight: bold;
+        padding:10px; border-width:3px; border-style: ridge; 
+	border-color: white; 
+    }
+
+#titaf{ Background-Color: #FFFF99; color: black; width: 80%;
+        font-size:14pt; font-weight: bold;
+        padding:5px; border-width:3px; border-style: ridge; 
+	border-color: white;
+    }
+
+#sign { Background-Color: #E6FFFF; color: black; width: auto;
+	font-size:10pt; font-weight: bold;
+	text-align: right; margin-top: 1px;
+	padding:3px; border-width:1px; 
+}
+#snom { Background-Color: #CCFFFF;  padding:3px;
+	font-size:10pt; font-weight: bold;
+	border-width:2px; border-color: red; border-style: ridge;
+}
+
+#fd { Background-Color: white; }
+#ja { Background-Color: yellow; }
+#jap { Background-Color: #FFFF99; }
+#re { Background-Color: red; Color: white; }
+#ve { Background-Color: #66FF00; }
+#bl { Background-Color: #CCFFFF; }
+#p1 { width: 75%; text-align: justify;}

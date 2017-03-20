@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice" xmlns:intf="http://webservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservice" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getByParams">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+      <element name="categoryName" type="xsd:string"/>
+      <element name="street" type="xsd:string"/>
+      <element name="city" type="xsd:string"/>
+      <element name="postcode" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getByParamsResponse">
+    <complexType>
+     <sequence>
+      <element name="getByParamsReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getByParamsResponse">
+
+      <wsdl:part element="impl:getByParamsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getByParamsRequest">
+
+      <wsdl:part element="impl:getByParams" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ClientAPI">
+
+      <wsdl:operation name="getByParams">
+
+         <wsdl:input message="impl:getByParamsRequest" name="getByParamsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getByParamsResponse" name="getByParamsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ClientAPISoapBinding" type="impl:ClientAPI">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getByParams">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getByParamsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getByParamsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ClientAPIService">
+
+      <wsdl:port binding="impl:ClientAPISoapBinding" name="ClientAPI">
+
+         <wsdlsoap:address location="http://localhost:8080/Projet3/services/ClientAPI"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,52 @@
+\chapter{TD6: Interrogation d'une BDD SQL}
+
+Dans le cadre de ce TD, une base de données PostgreSQL nous était accessible sur le réseau de l'UTC. Celle-ci est constituée de tables calquées sur les tables inverses réalisées durant les premiers TD portant sur ce projet. L'indexation ici était donc faite sur les fichiers en fonction des titres des articles, de leur date, leur rubrique, des numéros, emails, etc.
+
+\section{Ambition}
+
+Pour ce TD, il s'agissait de réaliser quelques tests d'interrogation de la base afin de se familiariser à la fois avec celle-ci mais aussi avec l'interrogation de bases en Java. Nous devions aussi vérifier si les résultats retournés étaient bien ceux attendus.
+
+\medskip
+
+Les requêtes SQL étaient dans un premier temps ``\textit{hardcodées}''. Nous avons ensuite dû permettre à l'utilisateur de rentrer sa requête à la main en la tapant.
+
+\medskip
+
+La légère difficulté résidait dans le traitement des résultats retournés. Dans l'hypothèse que n'importe quelle requête pouvait être tapée, on ne pouvait prédire à l'avance le nombre de colonnes dans les résultats.
+
+\section{Programme générique acceptant n'importe quelle requête}
+\java
+Pour solutionner le problème susmentionné, il nous a fallu aller voir dans l'API SQL de Java les méthodes à notre disposition. Il se trouve qu'il existe un moyen d'obtenir les méta-données des résultats. En fonction de ces méta-données, nous étions en mesure de connaître le nombre de colonnes pour chaque résultat. En revanche, on ne pouvait pas connaître le type (\lstinline{int}, \lstinline{String}, etc.). Nous utilisons donc la classe générique \lstinline{Object} de Java avec sa méthode \lstinline{toString()} afin d'afficher le contenu d'une colonne pour un résultat.
+
+\medskip
+
+Nous avons créé une classe Java permettant de gérer l'ensemble des opérations sur la base de données.
+
+\medskip
+
+Notre méthode Java exécutant une requête donnée en paramètre retourne donc comme résultat\\
+\lstinline{Tuple<ArrayList<String>,ArrayList<ArrayList<String>>>}, où \lstinline{Tuple} est une classe utilitaire que nous avons créée pour l'occasion, en plus de celle pour la base de données.
+
+\java
+\begin{lstlisting}
+public static class Tuple<A,B> {
+	public final A headers;
+	public final B array;
+
+	public Tuple(A a, B b) {
+		this.headers = a;
+		this.array = b;
+	}
+}
+\end{lstlisting}
+
+Dans le résultat retourné, le membre A de notre tuple contient les headers (donc les noms des colonnes, récupérés grâce aux méta-données). Quant au membre B, il contient l'ensemble des lignes de résultats, où une ligne est un ensemble de colonnes, d'où l'\lstinline{ArrayList} contenant un \lstinline{ArrayList}. Utiliser des \lstinline{ArrayList} et non des tableaux classiques \lstinline{String[]} nous permet d'être plus souple quant à la taille des tableaux, en déléguant ce problème à cette classe. En effet nous ne connaissons pas à l'avance les tailles de résultat.
+
+\section{Interrogation de la base de données}
+
+Notre classe \lstinline{Database} permet de se connecter à la base de données et d'exécuter des requêtes quelconques sur celle-ci grâce à ses méthodes \lstinline{getConnection} (la connection se fait à l'aide du login, du mot de passe et de l'URL) et \lstinline{doRequest}.
+La requête SQL exécutée dans la méthode \lstinline{doRequest} parcourt les tables nécessaires de la BDD et retourne les résultats sous forme de tuple.
+
+\medskip
+
+Une fois cette petite application Java permettant d'interroger la base de données obtenue, l'intérêt était de la lier au reste des TD composant le projet.

@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html><!-- Modifi&eacute; f&eacute;vrier 2016 - UTC --><head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>TD sockets TCP - SR03 Printemps 2016</title>
+<!-- style TYPE="text/css"></STYLE-->
+<link rel="StyleSheet" href="TD%20sockets%20TCP%20-%20SR03%20Printemps%202016_fichiers/siteuvsr.css" type="text/css">
+</head>
+<body>
+<!-- ________________________________________________________________________ -->
+<center><table border="" width="100%">
+<tbody><tr><td width="78">
+<center><img src="TD%20sockets%20TCP%20-%20SR03%20Printemps%202016_fichiers/utc.jpg" height="60" width="170" align="MIDDLE"></center></td>
+
+<td>
+<center><b><font color="#7F7F7F"><font size="+3">SR03 - Printemps 2016</font></font></b>&nbsp;</center>
+<center><b><font color="#7F7F7F"><font size="+3">Communication par sockets TCP</font></font></b></center>
+</td></tr>
+</tbody></table></center><hr>
+<!-- ________________________________________________________________________ -->
+<p id="tit2">
+<a href="http://tuxa.sme.utc/%7Esr03/index.html">Retour page d'accueil sr03.</a><br>
+</p>
+
+<hr>
+<p id="tit1"><b>TD sockets TCP - Présentation</b></p>
+<hr>
+
+<p>
+<!--Nous allons construire un dispositif clients-serveur semblable &agrave; celui du TD 02;
+mais en utilisant cette fois comme "syst&egrave;me de transport" entre 
+clients et serveur un socket TCP. -->
+Nous allons construire un dispositif clients-serveur en utilisant, cette fois-ci comme
+"système de transport", entre les clients et le serveur, des sockets TCP.
+</p>
+<p>
+Les sockets TCP ont une sémantique de <b>flux d'octets</b>. On va donc
+rencontrer des problèmes similaires à ceux rencontrés lors
+d'échanges de données via un pipe Unix et vus au TD 01.
+</p>
+<p>
+Pour simplifier et ne pas prendre trop de temps, on ne va pas réimplémenter
+complètement l'application client-serveur précédente, mais seulement
+les parties importantes qui permettent de comprendre le fonctionnement du moyen de
+transport utilisé.
+</p>
+
+<hr>
+<p id="tit1"><b> TD sockets TCP - A - Serveur et client TCP simples</b></p>
+<hr>
+
+<p>
+On va écrire les programmes <b>clio.c et sero.c</b>, le serveur TCP 
+étant de <b>type concourant</b> : à chaque connexion d'un client,
+le serveur fork() un sous-process fils qui va traiter tout le dialogue 
+avec ce client.
+</p>
+
+<p>
+Cette première étape sera simplifiée.
+</p>
+
+Définir dans un fichier <b>defobj.h</b> un <b>typedef struct { ...} obj;</b> 
+qui décrit la structure suivante :
+<pre>+---------------+
+| char [max 12]	|
+|		|
++---------------+
+| char [max 24]	|
+|		|
+|		|
++---------------+
+| int ii	|
++---------------+
+| int jj	|
++---------------+
+| double dd	|
+|		|
++---------------+
+</pre>
+
+Construire un fichier <b>iniobj.h</b> qui initialise un tableau d'objets
+(longueur du tableau définie par #define tablen n)
+de type "obj" tels que décrits ci-dessus.
+<pre>  "ident_o1", "description_o1", 11, 12, 10.2345
+  "ident_o2", "description_o2", 21, 22, 20.2345
+  "ident_o3", "description_o3", 31, 32, 30.2345
+</pre>
+
+Ecrire les programmes <b>clio.c</b> et <b>sero.c</b> suivants :
+
+<pre> <b> clio.c</b>
+      initialise le socket TCP
+      fait une demande de connexion au serveur
+  	  boucle :
+  	       envoi de "n" objets "obj" (obtenus de iniobj.h)
+  	       le dernier objet envoyé contient un marqueur de fin
+  	       obj.iqt = -1
+      fermer la connexion
+      fin
+
+ <b> sero.c</b>
+      initialise le socket TCP
+      boucle :
+  	  attente des connexions clients
+  	  quand connexion client: fork()
+  	      fils : traiterclient()
+  		      boucle : lire data client sur socket
+  		    	       jusqu'à objet contenant "fin"
+  	      père : waitpid() attends fin du fils
+  		      si statut fin fils et retour sur attente des connexions clients
+</pre>
+
+<hr>
+<p id="tit1"><b>TD sockets TCP - B - Le serveur TCP simple devient un vrai
+serveur concourant</b></p>
+<hr>
+
+<p>
+On va écrire une version <b>serv.c</b> du serveur TCP qui soit
+vraiment concourante.
+</p>
+<p>
+En effet, en <b>(A)</b>, pour simplifier l'écriture du premier serveur TCP en ne
+mélangeant pas tous les problèmes, on a mis le serveur en attente pendant
+que le fils gère la connexion d'un client.
+</p>
+
+<p>
+Ceci ne permet pas de recevoir une nouvelle connexion pendant le traitement
+de la première.
+</p>
+
+<p>
+Un vrai serveur TCP concourant doit, aussitôt après le fork(), aller se
+remettre en attente sur le accept() pour créer un nouveau fils pour une
+nouvelle connexion qui pourrait arriver juste après la première, alors
+que le premier fils n'a pas encore terminé son dialogue avec son client.
+</p>
+
+<p>
+Se pose alors le problème de la gestion de la terminaison de tous ces
+fils. Quand un sous-process fils meurt, il envoie un signal SIGCHLD à 
+son process parent et celui-ci récupère le status de fin du fils dans
+le paramètre ad-hoc de l'appel wait() ou waitpid().
+</p>
+
+<p>
+Que se passe-t-il si le serveur (le père) ne fait pas de wait() pour
+récupérer la fin des fils ? On peut écrire une version <b>sernow.c</b> de 
+serv.c sans le waitpid() et observer le résultat :
+</p>
+<pre> 1929 pts/2    00:00:00 sernow
+ 1931 pts/2    00:00:00 sernow &lt;defunct&gt;
+ 1933 pts/2    00:00:00 sernow &lt;defunct&gt;
+</pre>
+
+<p>
+Comme le père ne partage pas l'espace virtuel du fils, et ne fait pas
+de wait, il n'est pas informé de la fin de chaque fils. Ceux-ci restent
+&lt;defunct&gt; (process en état "zombie") dans le système jusqu'à la fin du serveur.
+</p>
+
+<p>
+Si on construit un serveur de ce type, après la création d'un certain
+nombre de fils, le fork() renverra une erreur : il y a une limite
+système au nombre de sous-process qu'un même process peut créer (il y
+aussi une limite au nombre total de process dans la machine).
+</p>
+
+<p>
+Pour un serveur destiné à rester actif très longtemps (même parfois
+en permanence), ce comportement est inacceptable.
+</p>
+
+<p>
+Il va donc falloir traiter la terminaison des fils tout en allant AUSSI
+le plus vite possible dans le accept().
+</p>
+
+<p>
+Une façon (ce n'est pas la seule : on peut en inventer d'autres à base
+de données partagées avec les fils et testées par le serveur), sera de
+mettre en place un "handler" de traitement du signal SIGCHLD envoyé au
+parent quand un fils se termine.
+</p>
+
+<p>
+Dans le handler, on fera un waitpid() pour récupérer le status du fils
+et permettre ainsi à celui-ci de disparaître du système en libérant
+ses ressources.
+</p>
+<p>
+<span id="ja"><u>Nota :</u></span> on ajoutera une instruction
+<b>sleep(1);</b> dans la routine "traiterclient" du serveur fils,
+afin de simuler un dialogue un peu long entre client et serveur.
+Ceci est nécessaire pour vérifier que le traitement du signal
+SIGCHLD a été correctement programmé. Sinon, le fils termine
+avant que le serveur père ait repris la main et se soit remis dans
+le accept(), ce qui fait que l'on peut passer à côté du problème
+et avoir un programme qui "a l'air" de marcher, mais qui se plantera
+dans une situation réelle.
+</p>
+
+<p>
+On voit donc que, si l'utilisation de TCP simplifie d'une certaine
+façon la gestion du dialogue client&lt;--&gt;serveur, elle amène d'autres
+contraintes.
+</p>
+<pre>Avantages de TCP :
+   - garantit la fiabilité des échanges client&lt;--&gt;serveur
+   - établit une connexion client&lt;--&gt;serveur pendant laquelle
+     le fils traitant sait qu'il dialogue toujours avec le même client
+   - gère de façon naturelle "n" dialogues simultanés avec des
+     clients différents.
+
+Inconvénients de TCP :
+   - l'échange par "flux d'octet" impose l'implantation dans ce flux
+     d'un protocole applicatif (reconstituer des messages pour
+     construire un dialogue)
+   - la gestion du serveur "maître" est plus complexe
+</pre>
+
+<hr>
+<p id="tit1"><b>TD sockets TCP - C - Serveur TCP concourant et clients TCP</b></p>
+<hr>
+
+<p>
+On va écrire <b>client.c et server.c</b> qui font plusieurs échanges
+d'objets à chaque connexion, server.c étant capable de gérer plusieurs
+connexions simultanées.
+</p>
+
+<p>
+server.c utilisera la même méthode que serv.c (capture signal) pour gérer
+les terminaisons des fils et accepter plusieurs clients simultanés
+</p>
+
+<p>
+client.c va envoyer à server.c un message de requête (on utilisera pour
+simplifier l'envoi d'un objet "obj").
+Le serveur, de son côté, modifie l'objet et le renvoie au client.
+Le client, qui boucle sur la lecture de data en réponse à sa requête,
+reconstitue l'objet et l'affiche.
+</p>
+
+<p>
+** Attention ** : client.c NE SAIT PAS combien d'octets devront être lus
+pour avoir la totalité de la réponse et ne devra pas se mettre en situation
+bloquante en essayant de lire trop de données.
+</p>
+
+<p>
+Il faudra donc utiliser un protocole "applicatif" qui décrit la façon
+dont la réponse du serveur est envoyée au client.
+</p>
+
+<p>
+Après lecture de la réponse, le client envoie une requête "fin" indiquant
+au serveur que cette connexion peut être fermée.
+</p>
+
+<!--
+<p>
+On remarquera que l'on se trouve ici avec un probl&egrave;me similaire &agrave; celui
+du programme "forkpipe.c" du TD 01.
+</p>
+-->
+
+<p>
+<!-- Rappel de la probl&eacute;matique : -->
+Problématique :
+</p>
+<pre>On a deux grands choix :
+ - travailler sur le <span id="ja">contenant</span> : encapsulation
+   des données utiles dans des données de gestion;
+ - travailler sur le <span id="ja">contenu</span> : utiliser des 
+   <span id="ja">marqueurs</span> de début et/ou de fin de messages. Ceci 
+   suppose que les marqueurs ne sont jamais présents 
+   dans les données,  ce qu'on peut assurer par des 
+   techniques d'échappement.
+
++---------------+       	+---------------+
+| type en-tête	|       	|marqueur début |
++---------------+       	+---------------+
+|   nombre	|-------+	| &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; |
++---------------+       |	+---------------+
+    +---------------+	|	    +---------------+
+    | type data     |	|	    | type data     |
+    +---------------+	|	    +---------------+
+    |	data	    |	|	    |	data	    |
+    +---------------+	|	    +---------------+
+    ....	     	|	    ....
+    +---------------+	|	    +---------------+
+    | type data     |	|	    | type data     |
+    +---------------+	|	    +---------------+
+    |	data	    |	|	    |	data	    |
+    +---------------+	|	    +---------------+
++---------------+       |	+---------------+
+| en-tête "fin"	| &lt;-----+	|marqueur "fin" |
++---------------+       	+---------------+
+|     --	|       	| &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; |
++---------------+       	+---------------+
+
+L'important est de pouvoir assurer une extraction fiable,
+depuis le flux, d'une série de messages de longueur
+différentes, ces longueurs n'étant pas connues à l'avance,
+mais découvertes au fur et à mesure de la lecture du flux.
+</pre>
+
+<!--
+<p>
+Exemple d'ex&eacute;cution :
+</p>
+<pre>
+[sr03@nat7 td3]$ <b>./server</b>
+o= ident_o1 description_o1 11 12 1.023450e+01
+o= ident_o3 description_o3 -1 32 3.023450e+01
+sero - init socketAttachement reussi- Attente connexion.
+Connexion etablie. Fork pour traiter.
+o= dummy -dummy- 1 2 1.234500e+00
+connexion client traitée par pid=12309
+o= dummy -dummy- -1 2 1.234500e+00
+handler fin fils pid=12309 code=1
+handler: No child processes
+
+[sr03@nat7 td3]$ <b>./client</b>
+Connexion etablie. Envoi messages.
+reçu liste lng=3 obj 11 nbre=3 obj 101 nbre=2 obj 102 nbre=12 obj 103 nbre=5
+reçu liste lng=-1 obj -1 nbre=-1
+Exit.
+</pre>
+-->
+
+<hr>
+
+
+</body></html>

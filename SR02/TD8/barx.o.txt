@@ -1,0 +1,41 @@
+
+
+/* ------------------------------------------------------ */
+
+Fonctions de dessin appelées : (ces fonctions ne sont PAS des fonctions de X11: elles sont définies dans barx.o pour simplifier la réalisation du TD)
+
+initrec(); /* creer fenetre rectangle rouge */
+
+detruitrec(); /* detruire la fenetre rectangle */
+
+flushdis (); /* flush display buffer */
+
+drawstr (x,y,string,long); /* écrire string en x,y */
+
+drawrec (x,y,larg,hter); /* dessine rect. en blanc */
+
+fillrec (x,y,larg,hter,col1); /* remplir rect. avec col1 */
+
+exemples :
+
+drawstr (30, 125, "_0_", 3);
+
+drawrec (100,100,100+m1*10,30);
+
+fillrec (100,102,100+j*10,26,"yellow");
+
+/* ------------------------------------------------------ */
+
+Fonction de mise en attente d'un thread Fonction :
+
+thread_wait(numth,s,c); /* sec. et c/100 sec. */ appelée par le thread de numéro "numth", elle met ce thread en attente pour "s" secondes et "c" centièmes.
+
+thread_wait doit être initialisée avant utilisation par: thread_wait(-1,0,0);
+
+Prototype : void thread_wait(int th, unsigned long sec, long csec)
+
+Exemple :
+
+thread_wait(2,1,40); /* thread 2 attend 1s. 40/100 */
+
+/* ------------------------------------------------------ */

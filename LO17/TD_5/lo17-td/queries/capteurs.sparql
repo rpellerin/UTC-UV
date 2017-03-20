@@ -1,0 +1,8 @@
+PREFIX lo17: <http://www.owl-ontologies.com/lo17#> 
+PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>
+SELECT ?numero
+WHERE {
+  ?lit pf:textMatch('+capteurs' 0.5) .
+  ?bull lo17:hasNumero ?numero .
+  ?bull lo17:hasTexte ?lit
+}

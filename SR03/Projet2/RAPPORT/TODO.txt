@@ -1,0 +1,1 @@
+il sera utile spécifier dans le rapport le choix des fonctionnalités que vous avez implémentés et la motivation de ce choix. Pour le reste, le même format du rapport du premier projet sera bien. 

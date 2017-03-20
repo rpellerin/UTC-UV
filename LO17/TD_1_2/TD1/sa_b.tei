@@ -1,0 +1,9 @@
+<listBibl>
+<bibl id=1><author>Gross, M.</author><date>1990</date><title>Sur la notion harrissienne de transformation et son application au français</title><title level=j>Langage</title><biblScope>99</biblScope><publisher>Larousse</publisher><pubPlace>Paris</pubPlace></bibl>
+<bibl id=2><author>Lyons, J.</author><date>1980</date><title>Sémantique linguistique</title><publisher>Larousse</publisher><pubPlace>Paris</pubPlace></bibl>
+<bibl id=3><author>Maingueneau, D.</author><date>1986</date><title>Eléments de linguistique pour le texte littéraire</title><publisher>Bordas</publisher><pubPlace>Paris</pubPlace></bibl>
+<bibl id=4><author>Ruwet, N.</author><date>1972</date><title>Théorie syntaxique et syntaxe du français</title><publisher>Seuil</publisher><pubPlace>Paris</pubPlace></bibl>
+<bibl id=5><author>Appelt, D.E.</author><date>1988</date><title level=a>Planning Natural Language Referring Expressions</title><editor>McDonald, D.D. and Bolc, L. (publishers)<editor><title>Natural Language Generation Systems</title><publisher>Springer-Verlag</publisher><pubPlace>New York</pubPlace></bibl>
+<bibl id=6><author>Busemann, S.</author><date>1991</date><title>Using Pattern-Action Rules for the Generation of GPSG Structures from Separate Semantic Representations</title><biblScope>DFKI research report RR-91-16</biblScope><pubPlace>Sarrebruck</pubPlace></bibl>
+<bibl id=7><author>Carberry, S.</author><date>1990</date><title>Plan recognition in Natural Language</title>revu par Calistri-Yeh, R.<title level=j>Computational Linguistics</title><biblScope>vol 17, no3,sept.91, 327-329</biblScope></bibl>
+</listBibl>

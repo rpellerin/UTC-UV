@@ -1,0 +1,37 @@
+Notation du projet SR03 Web services :
+- Rapport pour le 10 juin (5 pts) : rapport guidé, répondre aux questions sur moodle
+- Soutenance (5 pts) : pas de diapos, démo (préparer un cas d'utilisation avec des données)
+- Code (10 pts) :
+	Autonomie (2 pts)
+	Fonctionnement et qualité (Indentations, commentaires) (5 pts)
+	Questions (3 pts) : savoir y répondre lors de la soutenance 
+
+
+
+Partie projet :  
+1) Schéma XML (s'aider de l'arbre XML)
+2) Modèle conceptuel UML puis créer les beans (classes objet)
+3) Créer le web service
+S'aider du TCP/IP Monitor pour voir les échanges client/serveur ? 
+4) Web service SOAP stateless (sans état), ne sauvegarde pas
+La deuxième méthode ne peut pas voir les modifs de la première méthode 
+-> Faire des DAO pour communiquer avec une BDD
+Obtenir la persistance
+5) 2 web services client : 2 GUI en web (avec JSP)
+dissocier côté client et côté serveur
+
+Soutenance : passage en 3e
+
+Rapport :
+XML : arbre et schéma
+UML : diagramme et MLD
+Web service : donner prototype (entrées/sorties) des méthodes essentielles (Ajouter annonce, suppr annonce...)
+SOAP : prendre une méthode intéressante par rapport aux messages SOAP (récupérer requête et réponse dans TCP/IP Monitor)
+Architecture : simplement donner le choix d'architecture choisi (MVC)
+
+
+
+MLD :
+Categorie(#categorie_id:integer, nom:string)
+Annonce(#annonce_id:integer, #categorie=>Categorie(categorie_id), nom:string, adresse=>Adresse(adresse_id), telephone:string)
+Adresse(#adresse_id:integer, rue:string, ville:string, codepostal:string)

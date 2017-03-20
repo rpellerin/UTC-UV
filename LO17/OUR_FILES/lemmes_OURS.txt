@@ -1,0 +1,58 @@
+veux		vouloir
+voudrais	vouloir
+afficher	vouloir
+lister		vouloir
+souhaite	vouloir
+souhaiterais	vouloir
+montrer		vouloir
+retrouve	vouloir
+trouve		vouloir
+trouver		vouloir
+quels		vouloir
+quel		vouloir
+quelle		vouloir
+quelles		vouloir
+obtenir		vouloir
+
+
+numero		numero
+numeros		numero
+numéro		numero
+numéros		numero
+
+
+fichier		fichier
+fichiers	fichier
+
+
+et		et
+ou		ou
+
+
+contiennent	contenir
+contenant	contenir
+contient	contenir
+parlant		contenir
+parlent		contenir
+concernant	contenir
+concernent	contenir
+comprenant	contenir
+mentionnant	contenir
+thème		contenir
+
+
+rubrique	rubrique
+
+sans		pas
+
+datant		date
+datés		date
+datées		date
+daté		date
+dates		date
+date		date
+annee		annee
+annees		annee
+années		annee
+
+moins		<

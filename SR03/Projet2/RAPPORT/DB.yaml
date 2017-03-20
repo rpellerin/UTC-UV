@@ -1,0 +1,40 @@
+answer:
+    answer: TEXT
+    _order: INT
+    isCorrect: BOOL
+    isActive: BOOL
+    question_id:
+
+course:
+    date: TIMESTAMP
+    duration: INT
+    score: INT
+    user_id:
+    quiz_id:
+
+question:
+    question: TEXT
+    _order: INT
+    isActive: BOOL
+    quiz_id:
+
+questionanswer:
+    course_id:
+    question_id:
+    answer_id:
+
+quiz:
+    subject: TEXT
+    isActive: BOOL
+    user_id:
+
+user:
+    email: TEXT
+    password: TEXT
+    name: TEXT
+    company: TEXT
+    phoneNumber: TEXT
+    creation: TIMESTAMP
+    isActive: BOOL
+    isAdmin: BOOL
+

@@ -1,0 +1,108 @@
+\chapter{TD3: Correcteur orthographique}
+
+\section{Ambition}
+
+Le but de ce TD était d'obtenir un analyseur associant à chaque mot d'une phrase donnée en argument, le lemme lui correspondant, ou à défaut une liste des meilleurs lemmes possibles. Les erreurs éventuelles dues à l'utilisateur étaient également à prendre en compte.
+
+\medskip
+
+Par ailleurs, comme dit précédemment, il nous était demandé d'implémenter deux algorithmes : celui par \textbf{proximité} et celui de \textbf{Levenshtein}. À la sortie de ces algorithmes, nous aurions donc une phrase composée uniquement de lemmes, prête à être transformée en requête SQL. Au préalable, avant la transformation en lemmes, il nous fallait retirer les mots présents dans la stop list fournie ainsi que ceux présents dans notre stop list, que nous viendrions compléter au fur et à mesure du projet. Cela n'était pas précisé dans le sujet mais il était néanmoins important de le faire pour la suite du projet.
+
+\section{Fonctionnement et structuration}
+
+\subsection{Récupération des fichiers de stop lists et de lemmes}
+
+Nous avons deux classes pour cela :
+
+\java
+\begin{itemize}
+    \item \lstinline{Main.java} : entrée du programme (contient la fonction \lstinline{main}). Cette classe lit les paramètres donnés au programme grâce à \lstinline{String[] args}. Les paramètres données en entrée au programme sont les fichiers de stop list et de lemmes.
+    \item \lstinline{InputFile.java} : classe permettant d'obtenir une \lstinline{ArrayList<String>} contenant toutes les lignes d'un fichier.
+\end{itemize}
+
+Nous instancions donc 4 fois la classe \lstinline{InputFile}: 2 fois pour récupérer la stop list et les lemmes fournis dans le cadre du TD, 2 autres fois supplémentaires pour récupérer nos propres fichiers (une stop liste et un autre ensemble de lemmes). Par conséquent, notre programme accepte 4 arguments.\\
+\textbf{Pourquoi créer deux fichiers supplémentaires ?} Nous avions besoin de supprimer certains mots comme ``\textbf{d'}'' ou ``\textbf{l'}'' pour plus tard obtenir une phrase prête à être interprétée par la grammaire. De même, en vue d'obtenir une requête SQL, il nous fallait avoir nos propres lemmes, tels que :
+
+\begin{itemize}
+  \item veux: vouloir
+  \item afficher:    vouloir
+  \item lister:      vouloir
+\end{itemize}
+
+Il est important de noter que si une association mot-lemme a été définie dans le fichier fourni pour le TD, elle peut être supprimée et remplacée par une autre association mot-lemme définie dans notre fichier, où le mot serait le même. Par exemple, si le mot ``afficher'' avait été associé au lemme ``affiche'' dans le fichier du TD, notre fichier viendrait écraser cette association et au final, le lemme correspondant à ``afficher'' serait ``vouloir'', comme défini dans notre fichier de lemmes. Cela se fait grâce à l'utilisation de \java\lstinline{HashMap<String,String>}, qui offre de bonnes performances en termes de temps d'accès (temps constant) et assure aussi l'unicité des clés.
+
+\subsection{Saisie de la phrase par l'utilisateur}
+
+Nous avons créé une classe qui lit sur \lstinline{System.in} et retourne une \lstinline{String} correspondant à ce que l'utilisateur a entré.
+
+\subsection{Retirer les mots des stop lists}
+
+La phrase entrée par l'utilisateur est mise en minuscules et \textit{tokenizée} grâce à \lstinline{string.split("\\s+")}. Cela nous permet d'obtenir un tableau de \lstinline{String} sur lequel itérer.
+
+\medskip
+
+Nous avons créé une classe \lstinline{Lexicon.java} qui contient nos deux algorithmes (proximité et Levenshtein, voir plus bas) ainsi qu'un \lstinline{HashMap<String,String>}.
+
+\medskip
+
+Les mots de la stop list ont au préalable été mis dans le \lstinline{HashMap<String,String>} (qui est un attribut de la classe \lstinline{Lexicon}), pour lequel la clé vaut le mot de la stop list et la valeur vaut une \lstinline{String} vide. Avec une simple boucle \lstinline{for} sur les tokens, nous remplaçons les mots si présents dans le \lstinline{HashMap} par la valeur associée, c'est-à-dire une \lstinline{String} vide.
+
+\subsection{Trouver le lemme ``parfait''}
+
+Ici, le principe est le même, nous utilisons un objet de la classe \lstinline{Lexicon}. Le \lstinline{HashMap} contient en clés les mots à remplacer et en valeurs les lemmes associés. Une fois de plus, comme pour la stop list, une boucle \lstinline{for} permet de remplacer les mots par leur lemme correspondant, s'il y en a un.
+
+\subsection{Trouver le lemme par préfixe}
+
+Si nous ne trouvons pas de lemme associé à un mot donné, nous lançons l'algorithme de recherche par préfixe (implémenté selon le pseudo-code fourni dans le polycopié). \textbf{Cet algorithme suppose que le mot diffère uniquement par sa terminaison et qu'il n'y a pas de faute de frappe.} Le mot que l'on cherche à remplacer est comparé avec tous les mots présents en tant que clés de notre \lstinline{HashMap}. Si un mot a une très grande proximité avec le mot que l'on cherche à remplacer, on utilisera son lemme associé.
+
+\subsubsection{Seuils}
+
+Nous avons choisi les seuils suivants :
+
+\begin{itemize}
+    \item \textbf{SEUIL\_MIN} = 4 : correspondant au nombre minimum de lettres par mot pour les comparer
+    \item \textbf{SEUIL\_MAX} = 1 : correspond à la différence entre le nombre de lettres des deux mots à comparer
+    \item \textbf{SEUIL\_PROX} = 0.80 : correspond au pourcentage de correspondance minimum entre les deux mots pour que le mot trouvé soit retenu (donc 80\%)
+\end{itemize}
+
+Après plusieurs essais, ces seuils nous ont semblé donner de bons résultats. Il faut un minimum de lettres dans chaque mot pour les comparer mais surtout il ne faut pas une trop grande différence entre les nombres de lettres. Cet algorithme est peu fiable car il suppose qu'il n'y a pas de faute de frappe et que seule la fin change légèrement. Nous avons donc mis des seuils stricts pour être vraiment sûrs que le lemme ait de grandes chances d'être le bon. Sinon, nous préférerons nous référer à l'algorithme de Levenshtein.
+
+\medskip
+
+Après avoir lancé l'algorithme avec chaque mot de notre dictionnaire de lemmes, seul le mot ayant la plus grande proximité, supérieure à 80\% sera retenu. En cas d'égalité entre plusieurs mots, le premier est retenu.
+
+\subsection{Trouver le lemme par Levenshtein}
+
+Dans le cas où aucun lemme correspondant n'est trouvé directement dans le lexique ou avec une recherche par préfixe, il faut prendre en compte la possibilité qu'on ne trouve aucune correspondance pour le mot analysé car il comporte des fautes, probablement dues à l'utilisateur lorsqu'il a rentré sa phrase au clavier. L'algorithme de Levenshtein permet de calculer la distance orthographique entre deux mots, c'est-à-dire observer la distance minimale pour passer d'un mot à l'autre. Pour cela nous utilisons trois sortes d'opérations : l'insertion, la suppression et la substitution de lettres. Nous cherchons donc le ou les lemme(s) ayant le coût en opérations le plus petit pour retrouver le mot analysé.
+
+\medskip
+
+Ici, à nouveau nous avons implémenté l'algorithme comme donné dans le polycopié. Et comme pour l'algorithme par préfixe, chaque mot dont nous cherchons le lemme est comparé avec l'ensemble des clés de notre \lstinline{HashMap}.
+
+\section{Résultat et correction orthographique}
+
+En tapant la requête ``grnade'' et en utilisant un dictionnaire de lemmes composés des mots suivants :
+
+\code{Lemmes}
+\begin{lstlisting}
+grande  grande
+grenade grenade
+\end{lstlisting}
+
+Nous avons comme résultat ``grenade'' car le coût de Levenshtein est de 1, tandis que pour ``grande'' le coût est de 2. Nous supposons qu'il s'agit plutôt d'une faute de frappe et nous aurions plutôt souhaité obtenir ``grande'' comme résultat.
+
+\medskip
+
+C'est pourquoi nous avons du créer un algorithme qui s'exécute à la suite de l'algorithme de Levenshtein, et qui vient pondérer le score obtenu en fonction du mot pour lequel on cherche un lemme et du lemme potentiel. Vous trouverez cet algorithme en annexes (\ref{corr}).
+
+\medskip
+
+Sans rentrer dans les détails de l'algorithme, celui-ci cherche à savoir si deux lettres ont été inversées. À la fin, si l'algorithme n'a détecté \textbf{que} des inversions, et que les deux mots sont de la même longueur, l'algorithme retourne un nouveau score de 0. En revanche, s'il a détecté que les mots étaient bien différents, il retourne le même score que celui trouvé avec Levenshtein, à la différence que ce score peut être légèrement minoré si les deux mots font la même longueur.
+
+\medskip
+
+Après avoir intégré notre nouvel algorithme à la suite de Levenshtein, nous trouvons maintenant le lemme ``grande'' pour le mot ``grnade''. D'autres tests menés ont démontré que dans la plupart des cas nous obtenions une correction satisfaisante.
+
+\section{Critiques et améliorations}
+
+Pour pousser la recherche de correspondance entre un mot analysé et un lemme associé, nous aurions pu ajouter des tests supplémentaires à l'algorithme, comme par exemple avec le correcteur orthographique de Norvig.

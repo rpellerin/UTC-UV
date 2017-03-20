@@ -1,0 +1,6 @@
+q2;b
+avec distinct on enlève les doublons
+on en a 18 car certains contiennent des majuscules, d'autres non. si on ne tenait pas compte de la casse on en aurait 10
+
+q5
+plus on baisse le ranking plus on match

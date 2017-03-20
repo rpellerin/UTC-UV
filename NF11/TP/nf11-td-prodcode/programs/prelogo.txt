@@ -1,0 +1,9 @@
+import pointh
+import pointb
+import rectangle
+pointh(0 0) 
+pointb(100 100 #3) 
+pointb(100 0 #6) 
+pointb(0 0 #8) 
+pointh(100 100 #5) 
+rectangle(200 50 #1) nb = 36

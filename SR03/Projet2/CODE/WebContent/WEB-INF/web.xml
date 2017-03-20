@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>sr03</display-name>
+	<welcome-file-list>
+		<welcome-file>login</welcome-file>
+	</welcome-file-list>
+
+	<!-- SERVLETS -->
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>controllers.LoginController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Dashboard</servlet-name>
+		<servlet-class>controllers.DashboardController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UsersManagement</servlet-name>
+		<servlet-class>controllers.UsersManagementController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>QuizzesManagement</servlet-name>
+		<servlet-class>controllers.QuizzesManagementController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>QuestionsManagement</servlet-name>
+		<servlet-class>controllers.QuestionsManagementController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AnswersManagement</servlet-name>
+		<servlet-class>controllers.AnswersManagementController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CoursesManagement</servlet-name>
+		<servlet-class>controllers.CoursesManagementController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>TakeQuiz</servlet-name>
+		<servlet-class>controllers.TakeQuizController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FinishQuiz</servlet-name>
+		<servlet-class>controllers.FinishQuizController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>controllers.LogoutController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Dashboard</servlet-name>
+		<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsersManagement</servlet-name>
+		<url-pattern>/dashboard/users</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>QuestionsManagement</servlet-name>
+		<url-pattern>/dashboard/quizzes/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>QuizzesManagement</servlet-name>
+		<url-pattern>/dashboard/quizzes</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AnswersManagement</servlet-name>
+		<url-pattern>/dashboard/questions/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CoursesManagement</servlet-name>
+		<url-pattern>/dashboard/courses</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TakeQuiz</servlet-name>
+		<url-pattern>/dashboard/takequiz</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FinishQuiz</servlet-name>
+		<url-pattern>/dashboard/finishquiz</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<!-- FILTERS -->
+	<filter>
+		<filter-name>Set Character Encoding</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ignore</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Set Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>RestrictionToConnectedUser</filter-name>
+		<filter-class>filters.RestrictedPagesToConnectedUser</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RestrictionToConnectedUser</filter-name>
+		<url-pattern>/dashboard/*</url-pattern>
+	</filter-mapping>
+</web-app>

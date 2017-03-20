@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes" ?>
+<annuaire>
+	<annuaire_id>Id</annuaire_id>
+	<categorie categorie_id ="Id" name="categorie">
+		<annonce>
+			<annonce_id>Id</annonce_id>
+			<nom>Nom</nom>
+			<adresse>
+				<adresse_id>Id</adresse_id>
+				<rue>Rue</rue>
+				<ville>Ville</ville>
+				<codepostal>00000</codepostal>
+			</adresse>
+			<telephone>0000000000</telephone>
+		</annonce>
+		<annonce>
+			<annonce_id>Id</annonce_id>
+			<nom>Nom</nom>
+			<adresse>
+				<adresse_id>Id</adresse_id>
+				<rue>Rue</rue>
+				<ville>Ville</ville>
+				<codepostal>00000</codepostal>
+			</adresse>
+			<telephone>0000000000</telephone>
+		</annonce>
+	</categorie>
+	<categorie categorie_id ="Id" name="categorie">
+		<annonce>
+			<annonce_id>Id</annonce_id>
+			<nom>Nom</nom>
+			<adresse>
+				<adresse_id>Id</adresse_id>
+				<rue>Rue</rue>
+				<ville>Ville</ville>
+				<codepostal>00000</codepostal>
+			</adresse>
+			<telephone>0000000000</telephone>
+		</annonce>
+	</categorie>
+</annuaire>

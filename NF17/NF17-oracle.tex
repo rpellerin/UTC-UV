@@ -1,0 +1,307 @@
+\documentclass[11pt,a4paper,oneside,french,svgnames]{report}
+\usepackage[utf8]{inputenc} % force the use of utf8
+\usepackage[T1]{fontenc} % font encoding, allows accents
+\usepackage[top= 1.3cm,bottom=0.5cm, inner=0.5cm, outer=0.5cm]{geometry} % page formatting
+\usepackage[francais]{babel} % translate everything in the desired language: table of contents, etc. 'english' can be replaced with 'francais'
+\usepackage{parskip} % disable indent
+\usepackage{graphicx} % images management
+\usepackage{wrapfig} % floating images
+\usepackage{array} % allow arrays
+\usepackage{fancyhdr} % headers/footers management (overrides empty, plain and headings)
+\usepackage{listings} % code insertion (MUST BE WRITTEN AFTER BABEL)
+\usepackage{enumitem} % for /setlist
+\usepackage{color,soul} % add some colors and hightlight
+\usepackage{xcolor} % more colors
+\usepackage[hyphens]{url} % auto break lines in URL
+\usepackage[hidelinks,  colorlinks  = true, % no borders, colors enabled
+                        anchorcolor = blue,
+                        linkcolor   = black, % links in table of contents
+                        urlcolor    = blue,
+                        citecolor   = blue]{hyperref}
+
+\sethlcolor{cyan} % package soul
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% LISTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{comment}{rgb}{0.12, 0.38, 0.18 } % adjusted, in Eclipse: {0.25, 0.42, 0.30 } = #3F6A4D
+\definecolor{keyword}{rgb}{0.37, 0.08, 0.25}  % #5F1441
+\definecolor{string}{rgb}{0.06, 0.10, 0.98} % #101AF9
+
+\lstset{
+  columns=flexible, %prevent extra spaces
+  rulecolor=\color{black!50},
+  backgroundcolor = \color{blue!10},
+  numbers=none, % line numbering
+  showspaces=false,
+  showtabs=false,
+  tabsize=4,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=false,
+  commentstyle=\color{comment},
+  keywordstyle=\color{keyword},
+  stringstyle=\color{string},
+  basicstyle=\ttfamily,
+  extendedchars=true,
+  emph=[2]{In},
+  emphstyle=[2]\color{black!70},
+  morecomment=[l][\color{blue}]{Out},
+  frame=single,
+  frameround=tttt,
+  framerule=0.3pt,
+  framesep=4pt,
+  belowcaptionskip=2.1pt,
+  literate={à}{{\`a }}1 {â}{{\^a}}1 %                         letter a
+           {À}{{\`A}}1 {Â}{{\^A}}1 %                         letter A
+           {ç}{{\c{c}}}1 %                                   letter c
+           {Ç}{{\c{C}}}1 %                                   letter C
+           {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {ë}{{\"e}}1 % letter e
+           {É}{{\'E}}1 {È}{{\`E}}1 {Ê}{{\^E}}1 {Ë}{{\"E}}1 % letter E
+           {î}{{\^i}}1 {ï}{{\"i}}1 %                         letter i
+           {Î}{{\^I}}1 {Ï}{{\"I}}1 %                         letter I
+           {ô}{{\^o}}1 %                                     letter o
+           {Ô}{{\^O}}1 %                                     letter O
+           {œ}{{\oe}}1 %                                     letter oe
+           {Œ}{{\OE}}1 %                                     letter OE
+           {ù}{{\`u}}1 {û}{{\^u}}1 {ü}{{\"u}}1 %             letter u
+           {Ù}{{\`U}}1 {Û}{{\^U}}1 {Ü}{{\"U}}1 %             letter U
+  % above is a hack to force UTF8 compatibility (only for french)
+}
+
+% Usage : \code{main.cpp}{C++}
+\newcommand{\code}[2]{\lstset{
+  language=#2,
+  title={{\setlength{\fboxsep}{1pt}\fcolorbox{orange}{yellow!20}{\sffamily\scriptsize
+              \textcolor{gray!10}{\_}{#1}\textcolor{gray!10}{\_}}}}
+  }
+}
+
+\title{NF17 - Oracle}
+\author{Romain PELLERIN}
+\date\today
+
+\makeatletter
+\let\thetitle\@title
+\makeatother
+
+%\parindent=20pt
+\fancypagestyle{plain}{
+    % Headers
+    \renewcommand{\headrulewidth}{0pt}
+    \addtolength{\headsep}{-0.5cm}
+    \fancyhead[L]{\color{gray}\thetitle}
+    \fancyhead[R]{\color{gray}Dernière MaJ : \today}
+
+    % Footers
+    %\renewcommand{\footrulewidth}{0.1pt}
+    %\fancyfoot[C]{Université de Technologie de Compiègne}
+    %\fancyfoot[LE]{\ifnum\thepage>0 \thepage \fi}
+    %\fancyfoot[RO]{\ifnum\thepage>0 \thepage \fi}
+}
+
+\setlist[itemize,2]{label={$\bullet$}} % use bullets for nested itemize
+
+\pagestyle{plain} % uses fancy
+
+\begin{document}
+\scriptsize
+
+\begin{itemize}
+  \item Pas de type \lstinline{BOOLEAN}
+  \item Pas de mode \lstinline{AUTOCOMMIT}, il faut utiliser le mot-clé \lstinline{COMMIT;}
+  \item \textbf{Importer un CSV sous SQL Developer} : clic droit sur le dossier tables à gauche dans SQL Developer et choisir "Import data"
+\end{itemize}
+
+\subsection*{SQL2}
+\code{PL/SQL}{SQL}
+\begin{lstlisting}
+SELECT table_name FROM dba_tables;
+SELECT table_name FROM all_tables; -- Même résultat
+SELECT table_name FROM user_tables; -- Que mes tables;
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('FUNCTION','PROCEDURE','PACKAGE');
+
+DROP TABLE USER CASCADE CONSTRAINTS;
+CREATE TABLE USER ( 
+  prenom varchar2(20), 
+  nom varchar2(20), 
+  specialite varchar2(20), 
+  dateInscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  sexe char check (sexe in ('m','f')),
+  constraint PK_MEMBRE primary key (prenom),
+  constraint FK_MEMBRE_SPECIALITE foreign key (specialite) references SPECIALITE(intitule)
+);
+
+create sequence numerotation_projet -- Voir la cheatsheet sur PostgreSQL pour plus d'info
+INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE CACHE 10; -- Cache améliore les performances d'accès à la mémoire
+
+INSERT INTO Projet VALUES (numerotation_projet.NEXTVAL, 'Dupont', TO_DATE('06052015', 'DDMMYYYY'), TO_DATE('07052015', 'DDMMYYYY'), 'Pierre', SYSDATE); -- On peut aussi utiliser 'numerotation_projet.CURRVAL', SYSTIMESTAMP contient l'heure, en plus de SYSDATE
+COMMIT;
+--------------------------------------------------------------FONCTION--------------------------------------------------------------
+CREATE OR REPLACE FUNCTION fDemande (num_produit in number) RETURN varchar
+IS
+qte_vendue NUMBER;
+begin
+  select sum(qte) INTO qte_vendue from ligne_fact lf where lf.produit = num_produit;
+  IF (qte_vendue > 15) THEN
+    RETURN ('forte');
+  ELSIF (qte_vendue between 11 and 15) THEN
+    RETURN ('moyenne');
+  ELSE
+    RETURN ('faible');
+  END IF;
+END fDemande;
+/
+SHOW ERRORS;
+--------------------------------------------------------------PROCEDURE--------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE nb_fact(num_client IN NUMBER, nb OUT NUMBER, ca OUT NUMBER)
+AS
+BEGIN
+ dbms_output.put_line('Hello World!');
+ 
+ SELECT count(f.num) into nb FROM facture f where f.client = num_client;
+ 
+ SELECT SUM(P.PRIX*LF.QTE) into ca FROM FACTURE F, PRODUIT P, LIGNE_FAC LF WHERE F.NUM = LF.FAC AND P.NUM = LF.prod AND F.cli = n_cli;
+END nb_fact;
+/
+------------------------------------------------------------BLOC ANONYME------------------------------------------------------------
+SET SERVEROUTPUT ON
+DECLARE
+  CURSOR c_client IS SELECT num FROM client;
+  nb NUMBER; 
+  ca NUMBER;
+BEGIN
+  For client IN c_client Loop -- ligne de requete qui contient que 'num'
+    nb_fact(client.num,nb,ca);
+    dbms_output.put_line('the result for client ' || client.num || ' is ' || NB || ' (nb) and ' || CA || ' (ca)'); -- concaténation
+  End loop;
+END;
+/
+---------------------------------------------------------------TRIGGER---------------------------------------------------------------
+create or replace TRIGGER STOCK_MAJ
+AFTER INSERT ON ligne_fact FOR EACH ROW
+DECLARE
+  NEW_STOCK NUMBER;
+BEGIN
+  UPDATE PRODUIT SET PRODUIT.STOCK = PRODUIT.STOCK - :new.qte WHERE PRODUIT.num= :new.produit;
+  SELECT stock INTO NEW_STOCK from produit where num = :new.produit;
+  if (new_stock < 5) THEN
+    INSERT INTO JOURNALISATION VALUES ('Attention : rupture de stock imminente',sysdate,:new.produit, NEW_STOCK);
+  END IF;
+END;
+/
+----------------------------------------------Afficher le contenu de toutes les tables----------------------------------------------
+SET SERVEROUTPUT ON
+DECLARE
+BEGIN
+  FOR t IN (SELECT table_name FROM all_tables WHERE owner <> 'SYS' and data_type LIKE '%CHAR%') LOOP
+    dbms_output.put_line(SELECT * FROM t.table_name);
+  END LOOP;
+
+END;
+/
+\end{lstlisting}
+
+\newpage
+\subsection*{SQL3 - Relationnel objet}
+\code{PL/SQL}{SQL}
+\begin{lstlisting}
+CREATE OR REPLACE TYPE Client AS OBJECT (
+  num INTEGER,
+  nom varchar2(30),
+  prenom varchar2(30),
+  adresse varchar2(50),
+  date_nais date,
+  tel varchar2(30),
+  sexe char
+);
+/
+--------------------------------------------------------------Héritage--------------------------------------------------------------
+CREATE TYPE sous-type UNDER sur_type ( déclarations ou surcharges );
+------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tClient OF Client (
+  primary key (num),
+  check (sexe in ('m', 'f'))
+);
+/
+CREATE OR REPLACE TYPE LigneFacture AS OBJECT (
+  qte integer,
+  prod REF Produit, -- prod est un OID d'un objet Produit
+  prod2 Produit -- prod EST l'objet
+);
+/
+CREATE OR REPLACE TYPE RefLigneFacture AS OBJECT (
+  ligneFacture REF LigneFacture
+);
+/
+CREATE OR REPLACE TYPE ListeRefLigneFacture AS TABLE OF RefLigneFacture; -- Une table de REFERENCES vers des objets LigneFacture
+CREATE OR REPLACE TYPE ListeLigneFacture AS TABLE OF LigneFacture; -- Une table d'objets
+/
+CREATE OR REPLACE TYPE Facture AS OBJECT (
+  num integer,
+  date_etabli date,
+  fk_client REF Client,
+  ligness ListeLigneFacture, -- Contient une collection de LigneFacture
+  member function total return integer, -- Déclaration d'une fonction, implémentée plus bas
+  member function quantite return integer
+);
+/
+CREATE TABLE tFacture OF Facture (
+  PRIMARY KEY (num),
+  SCOPE FOR (fk_client) is tClient -- tClient est le nom de la table que l'on vise
+)
+NESTED TABLE lignes STORE AS table_lignes; -- On pourra faire Facture.lignes.COLONNE
+
+CREATE OR REPLACE TYPE BODY Facture IS
+  MEMBER FUNCTION total RETURN integer
+  IS
+    vtotal integer;
+  BEGIN
+    select sum(lf.qte * lf.prod.prix) INTO vtotal FROM tFacture F, table(f.ligness) lf WHERE f.num = self.num;
+    RETURN vtotal;
+  END total;
+  MEMBER FUNCTION quantite RETURN integer
+  IS
+    vquantite integer;
+  BEGIN
+    select sum(lf.qte) INTO vquantite FROM tFacture F, table(f.ligness) lf WHERE f.num = self.num;
+    RETURN vquantite;
+  END quantite;
+END;
+/
+-------------------------------------------------------------------------------------------------------------------------------------
+DECLARE
+ref_client_1 ref CLIENT;
+ref_client_2 ref CLIENT;
+ref_produit_1 ref PRODUIT;
+ref_produit_2 ref PRODUIT;
+ref_produit_3 ref PRODUIT;
+BEGIN
+SELECT REF(c) into ref_client_1
+from tClient c
+WHERE c.num = 1;
+-- ...
+INSERT INTO tFacture (num, date_etabli, clientt, ligness)
+VALUES (
+  6, SYSDATE, ref_client_1, ListeLigneFacture(
+    LigneFacture(3, ref_produit_1),
+    LigneFacture(2, ref_produit_2)
+  )
+);
+END;
+/
+\end{lstlisting}
+\section*{Niveau logique}
+\subsection*{Objet et référence d'objet}
+\textbf{Un OID ne peut pas être une FK, utiliser string par exemple}\\\\
+UN OBJET CONTIENT UN OBJET\\
+Type typBureau : <nom: string, numero: integer>\\
+Type typIntervenant : <nom: string, bureau: typBureau> -- Composition entre bureau et intervenant, CONTIENT L'OBJET. Il ne faudra pas créer de table pour Bureau
+
+UN OBJET REFERENCE UN OBJET\\
+Bureau de typBureau(\#nom) -- Table\\
+Type typIntervenant2 : <nom: string, bureau =>o Bureau> -- Bureau est une TABLE et non un TYPE, ici l'objet EST REFÉRENCÉ
+\subsection*{Tables imbriquées (collections)}
+Type RefBureau : <bureau =>o Bureau>\\
+Type ListRefBureau: collection de <RefBureau> -- Collection de références
+
+Type ListBureau: collection de <typBureau> -- Collection d'objets
+\end{document}

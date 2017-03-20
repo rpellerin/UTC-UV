@@ -1,0 +1,10 @@
+PREFIX lo17: <http://www.owl-ontologies.com/lo17#> 
+PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>
+SELECT ?contact ?text ?titre
+WHERE {
+  ?lit pf:textMatch('+capteur? -infrarouge -internet -Internet -l\'Internet' 0.4) .
+  ?bull lo17:hasTitre ?titre .
+  ?bull lo17:hasTexte ?text .
+  ?bull lo17:hasContact ?contact .
+  FILTER (?titre = ?lit || ?text = ?lit)
+}

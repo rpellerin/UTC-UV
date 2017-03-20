@@ -1,0 +1,5 @@
+In dao.ConnectionDB (Driver.getConnection)
+In html meta tags
+In JSP files, at the top of pages
+In create.sql
+In a dedicated filter (see web.xml)

@@ -1,0 +1,76 @@
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix :    <http://www.owl-ontologies.com/lo17#>  .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+:Corpus
+      a       owl:Class ;
+      rdfs:comment "Un corpus est un ensemble de bulletin."@fr ;
+      rdfs:label "CORPUS"@fr ;
+      rdfs:subClassOf owl:Thing .
+:Bulletin
+      a       owl:Class ;
+      rdfs:comment "Un bulletin regroupe les informations."@fr ;
+      rdfs:label "BULLETIN"@fr ;
+      rdfs:subClassOf owl:Thing .
+:Image
+      a       owl:Class ;
+      rdfs:comment "Un bulletin peut avoir plusieurs images."@fr ;
+      rdfs:label "IMAGE"@fr ;
+      rdfs:subClassOf owl:Thing .
+:hasBulletin
+      a       owl:ObjectProperty , owl:FunctionalProperty ;
+      rdfs:domain :Corpus ;
+      rdfs:label "a pour bulletin"@fr ;
+      rdfs:range :Bulletin .
+:hasFichier
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour nom de fichier"@fr ;
+      rdfs:range xsd:string .
+:hasNumero
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour numéro de bulletin"@fr ;
+      rdfs:range xsd:string .
+:hasDate
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour date"@fr ;
+      rdfs:range xsd:string .
+:hasRubrique
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour rubrique"@fr ;
+      rdfs:range xsd:string .
+:hasTitre
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour titre"@fr ;
+      rdfs:range xsd:string .
+:hasTexte
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour texte"@fr ;
+      rdfs:range xsd:string . 
+:hasContact
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour information de contact"@fr ;
+      rdfs:range xsd:string .
+:hasImage
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Bulletin ;
+      rdfs:label "a pour nom de fichier"@fr ;
+      rdfs:range :Image .
+:urlImage
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Image ;
+      rdfs:label "a pour information de contact"@fr ;
+      rdfs:range xsd:string .
+:legendeImage
+      a       owl:DatatypeProperty , owl:FunctionalProperty ;
+      rdfs:domain :Image ;
+      rdfs:label "a pour légende"@fr ;
+      rdfs:range xsd:string .        

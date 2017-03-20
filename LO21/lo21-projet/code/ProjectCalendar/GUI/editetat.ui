@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>editetat</class>
+ <widget class="QDialog" name="editetat">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>533</width>
+    <height>204</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Etat</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="dejaterminee">
+     <property name="text">
+      <string>Tache terminée, vous  ne pouvez pas changer son état.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="commencer">
+     <property name="text">
+      <string>Commencer la tâche</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="interrompre">
+     <property name="text">
+      <string>Interrompre la tâche</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="terminer">
+     <property name="text">
+      <string>Terminer la tâche</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>commencer</sender>
+   <signal>clicked()</signal>
+   <receiver>editetat</receiver>
+   <slot>commencertache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>interrompre</sender>
+   <signal>clicked()</signal>
+   <receiver>editetat</receiver>
+   <slot>interrompretache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>terminer</sender>
+   <signal>clicked()</signal>
+   <receiver>editetat</receiver>
+   <slot>terminertache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>commencertache()</slot>
+  <slot>interrompretache()</slot>
+  <slot>terminertache()</slot>
+ </slots>
+</ui>

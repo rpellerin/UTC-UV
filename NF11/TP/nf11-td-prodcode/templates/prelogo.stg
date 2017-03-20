@@ -1,0 +1,28 @@
+delimiters "$", "$"
+logo(procedures,commandes) ::=<<
+  $procedures; separator = "\n"$
+  $commandes:commande(); separator = "\n"$
+>>
+
+rectangle() ::=<<
+pour rectangle :long :larg
+  av :long td 90 av :larg td 90
+  av :long td 90 av :larg td 90
+fin  
+>>
+pointh() ::=<<
+pour pointh :x :y
+  lc 
+  fpos [ :x :y ]
+  bc
+fin 
+>>
+pointb() ::=<<
+pour pointb :x :y
+  fpos [ :x :y ]
+fin 
+>>
+commande(com) ::=<<
+fcc $com.couleur$
+$if(com.shouldRepet)$repete $com.nb$ [$endif$$com.commande$( $com.arg1$ $com.arg2$ )$if(com.shouldRepet)$ td 360 / $com.nb$]$endif$
+>>

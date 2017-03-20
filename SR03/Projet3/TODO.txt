@@ -1,0 +1,13 @@
+PROJET ANNUAIRE
+dao / beans
+
+un fichier (webservice) => méthode comme calculette qui appellent DAO
+
+générer wsdl
+
+===
+
+
+PROJET CLIENT
+copier wsdl
+créer des controllers, jsp, beans si besoin

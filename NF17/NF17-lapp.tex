@@ -1,0 +1,235 @@
+\documentclass[11pt,a4paper,oneside,french,svgnames]{report}
+\usepackage[utf8]{inputenc} % force the use of utf8
+\usepackage[T1]{fontenc} % font encoding, allows accents
+\usepackage[top= 1.5cm,bottom=0.5cm, inner=0.5cm, outer=0.5cm]{geometry} % page formatting
+\usepackage[francais]{babel} % translate everything in the desired language: table of contents, etc. 'english' can be replaced with 'francais'
+\usepackage{parskip} % disable indent
+\usepackage{graphicx} % images management
+\usepackage{wrapfig} % floating images
+\usepackage{array} % allow arrays
+\usepackage{fancyhdr} % headers/footers management (overrides empty, plain and headings)
+\usepackage{listings} % code insertion (MUST BE WRITTEN AFTER BABEL)
+\usepackage{enumitem} % for /setlist
+\usepackage{color,soul} % add some colors and hightlight
+\usepackage{xcolor} % more colors
+\usepackage[hyphens]{url} % auto break lines in URL
+\usepackage[hidelinks,  colorlinks  = true, % no borders, colors enabled
+                        anchorcolor = blue,
+                        linkcolor   = black, % links in table of contents
+                        urlcolor    = blue,
+                        citecolor   = blue]{hyperref}
+
+\sethlcolor{cyan} % package soul
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% LISTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{comment}{rgb}{0.12, 0.38, 0.18 } % adjusted, in Eclipse: {0.25, 0.42, 0.30 } = #3F6A4D
+\definecolor{keyword}{rgb}{0.37, 0.08, 0.25}  % #5F1441
+\definecolor{string}{rgb}{0.06, 0.10, 0.98} % #101AF9
+
+\lstset{
+  columns=flexible, %prevent extra spaces
+  rulecolor=\color{black!50},
+  backgroundcolor = \color{blue!10},
+  numbers=none, % line numbering
+  showspaces=false,
+  showtabs=false,
+  tabsize=4,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=false,
+  commentstyle=\color{comment},
+  keywordstyle=\color{keyword},
+  stringstyle=\color{string},
+  basicstyle=\ttfamily,
+  extendedchars=true,
+  emph=[2]{In},
+  emphstyle=[2]\color{black!70},
+  morecomment=[l][\color{blue}]{Out},
+  frame=single,
+  frameround=tttt,
+  framerule=0.3pt,
+  framesep=4pt,
+  belowcaptionskip=2.1pt,
+  literate={à}{{\`a }}1 {â}{{\^a}}1 %                         letter a
+           {À}{{\`A}}1 {Â}{{\^A}}1 %                         letter A
+           {ç}{{\c{c}}}1 %                                   letter c
+           {Ç}{{\c{C}}}1 %                                   letter C
+           {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {ë}{{\"e}}1 % letter e
+           {É}{{\'E}}1 {È}{{\`E}}1 {Ê}{{\^E}}1 {Ë}{{\"E}}1 % letter E
+           {î}{{\^i}}1 {ï}{{\"i}}1 %                         letter i
+           {Î}{{\^I}}1 {Ï}{{\"I}}1 %                         letter I
+           {ô}{{\^o}}1 %                                     letter o
+           {Ô}{{\^O}}1 %                                     letter O
+           {œ}{{\oe}}1 %                                     letter oe
+           {Œ}{{\OE}}1 %                                     letter OE
+           {ù}{{\`u}}1 {û}{{\^u}}1 {ü}{{\"u}}1 %             letter u
+           {Ù}{{\`U}}1 {Û}{{\^U}}1 {Ü}{{\"U}}1 %             letter U
+  % above is a hack to force UTF8 compatibility (only for french)
+}
+
+% Usage : \code{main.cpp}{C++}
+\newcommand{\code}[2]{\lstset{
+  language=#2,
+  title={{\setlength{\fboxsep}{1pt}\fcolorbox{orange}{yellow!20}{\sffamily\scriptsize
+              \textcolor{gray!10}{\_}{#1}\textcolor{gray!10}{\_}}}}
+  }
+}
+
+\title{NF17 - LAPP}
+\author{Romain PELLERIN}
+\date\today
+
+\makeatletter
+\let\thetitle\@title
+\makeatother
+
+%\parindent=20pt
+\fancypagestyle{plain}{
+    % Headers
+    \renewcommand{\headrulewidth}{0pt}
+    \addtolength{\headsep}{-0.5cm}
+    \fancyhead[L]{\color{gray}\thetitle}
+    \fancyhead[R]{\color{gray}Dernière MaJ : \today}
+
+    % Footers
+    \renewcommand{\footrulewidth}{0pt}
+    \fancyfoot{}
+}
+
+\setlist[itemize,2]{label={$\bullet$}} % use bullets for nested itemize
+
+\pagestyle{plain} % uses fancy
+
+\begin{document}
+\scriptsize
+
+% texte ici si besoin
+\code{Export/Import en CSV sous PostgreSQL}{SQL}
+\begin{lstlisting}
+-- Export
+COPY tablename TO 'csv/alldata_export.csv'; -- On peut aussi sélectionner des colonnes avec COPY tablename(col1, col2) ...
+COPY (SELECT col1 FROM tablename WHERE ... ) TO 'csv/alldata_export.csv' WITH DELIMITER ',' CSV HEADER; -- Delimiteur CSV, ajoute un header au CSV
+
+-- Import
+COPY tablename(col1, col2) FROM 'csv/file.csv' WITH DELIMITER ',' CSV HEADER;
+
+-- Dans un terminal, utiliser \copy
+\end{lstlisting}
+
+\code{SQL (postgresql)}{SQL}
+\begin{lstlisting}
+-- [...] = optionnel
+
+CREATE TYPE TYPE_DEPENSE AS ENUM ('materiel', 'fonctionnement');
+
+DROP TABLE IF EXISTS MATABLE CASCADE; -- CASCADE supprime les vues qui en dépendent, et les contraintes FK dans les autres tables
+CREATE TABLE MEMBRE_LABO (                                                        
+  matable_id SERIAL PRIMARY KEY, -- SERIAL = INTEGER + crée une séquence automatiquement ; PRIMARY KEY = UNIQUE + NOT NULL
+  categorie TEXT NOT NULL CHECK (type = 'I' OR type = 'B'),
+  mail_provider FLOAT [CONSTRAINT nom_de_la_contrainte] UNIQUE, -- NULL est autorisé plusieurs fois
+  telephone VARCHAR(22),
+  date_debut DATE, -- 'YYYY-MM-DD'
+  rdv TIMESTAMP REFERENCES RENDEZVOUS, -- 'YYYY-MM-DD HH:MM:SS' -- Référence la primary key de la table RENDEZVOUS
+  statut BOOLEAN,
+  depense TYPE_DEPENSE NOT NULL
+  CHECK (date_debut IS NOT NULL),
+  CHECK (mail_provider BETWEEN 1.2 AND 1.5),
+  UNIQUE (date_debut, rdv), -- On peut aussi mettre PRIMARY KEY ici, si on ne l'a pas écrit plus haut
+  FOREIGN KEY(mail_provider,telephone) REFERENCES USER(mail,telephone) ON DELETE CASCADE -- Les entrées seront supprimées quand le tuple (mail,telephone) n'existe plus dans USER                     
+);
+
+CREATE SEQUENCE serial [INCREMENT BY 2] [MINVALUE 1] [MAXVALUE 500] [START 101] [CYCLE]; -- CYCLE = on recommence quand on atteint MAXVALUE
+SELECT currval('serial'); -- On peut faire un INSERT INTO xxx VALUES (nextval('serial'));
+
+CREATE VIEW VINGENIEUR AS SELECT id,nom,mail,telephone,validateur,labo,specialite FROM MEMBRE_LABO WHERE type = 'I';
+
+CREATE FUNCTION CHECK_DATE_PROJET_CREATE() RETURNS trigger AS $ret$
+  DECLARE
+    proposition date;
+  BEGIN
+    SELECT INTO proposition date_emission FROM PROPOSITION_DE_PROJET prop WHERE prop.appel = NEW.appel;
+    IF(NEW.date_debut >= proposition) THEN
+      RETURN NEW; -- Les procédure appelées par un trigger BEFORE doivent retourner NEW en cas de succès
+    ELSE
+      RAISE EXCEPTION 'Date de début antérieure à la proposition de projet !';
+  END IF;
+  RETURN NULL;
+  END;
+$ret$ LANGUAGE 'plpgsql'; -- Obligatoire
+
+CREATE TRIGGER TRIGGER_CHECK_DATE_PROJET_CREATE
+  BEFORE INSERT ON PROJET
+  FOR EACH ROW EXECUTE PROCEDURE CHECK_DATE_PROJET_CREATE();
+-------------------------------------------------------------------------------------------------------------------------------------
+BEGIN [TRANSACTION]; -- Début transaction
+SELECT [DISTINCT] * | colonne [, ...] FROM unetable [, ... ] WHERE condition GROUP BY expression HAVING condition ORDER BY expression [ ASC | DESC ] LIMIT nombre; -- Possibilité de mettre un alias pour colonne (avec le mot-clé AS) et un alias pour table
+-- colonne peut contenir COUNT(*), SUM(nb*prix), etc. HAVING condition peut contenir COUNT(id) > 5 par exemple.
+
+INSERT INTO table [(colonne [, ...])] VALUES ({expression | DEFAULT} [, ...]) [RETURNING * | expression [[AS] nomdesortie] [, ...]];
+
+UPDATE table SET {colonne = {expression | DEFAULT}} [, ...] WHERE condition [RETURNING * | expression [[AS] nomdesortie] [, ...]];
+
+DELETE FROM table WHERE condition [RETURNING * | expression [[AS] nomdesortie] [, ...]];
+END; -- Fin transaction, COMMIT implicite
+\end{lstlisting}
+
+\newpage
+\code{HTML de base}{html}
+\begin{lstlisting}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" media="all" href="style.css" />
+        <title>Site</title>
+    </head>
+    <body>
+      <!-- Contenu ici -->
+    </body>
+</html>
+\end{lstlisting}
+
+\code{PHP et PDO}{PHP}
+\begin{lstlisting}
+$dbh = new PDO("pgsql:host=domain.tld;port=5432;dbname=database", "username", "password"); // Remplacer domain.tld, database, username et password, port est facultatif, déclenche une PDOException en cas d'erreur lors de la connexion
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//-----------------------------------------------------------------------------------------------------------------------------------
+$res = $dbh->query("SELECT * from MATABLE"); // resultat de la requete contenu dans $res
+$rows = $res->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, CLASSE_PHP); // CLASSE_PHP est une classe PHP
+// fetchAll est à FETCH_BOTH par défaut (tableau indexé par nom des colonnes et numéro des colonnes, en commençant par 0)
+// $rows contient un tableau d'objet de la classe CLASSE_PHP
+//-----------------------------------------------------------------------------------------------------------------------------------
+$sql = "SELECT * FROM MATABLE WHERE num = :numero AND app = :appel";
+$params = array(':numero' =>$numero, ':appel'  =>$appel);
+$query = $dbh->prepare($sql);
+$res = $query->execute($params);
+if ($res===True && query->rowCount()===1) {
+  $row = $query->fetch(PDO::FETCH_OBJ); // Crée un objet anonyme ayant les noms de colonnes comme propriétés
+  echo $row->NAME;
+}
+$dbh = NULL; // Coupe la connexion
+\end{lstlisting}
+\code{PHP et pg\_connect}{PHP}
+\begin{lstlisting}
+$conn = pg_connect("host=domain.tld port=5432 dbname=database user=username password=password") or die("Connexion impossible");
+if (!$dbh) {
+  echo "Erreur";
+  exit;
+}
+$result = pg_query($conn, "SELECT auteur, email FROM auteurs"); // On peut mettre plusieurs statements séparés par des ";"
+if (!$result) {
+  echo "Erreur";
+  exit;
+}
+$nombre_de_resultats = pg_num_rows($result);
+while ($row = pg_fetch_row($result)) {
+  echo "Auteur: $row[0]  E-mail: $row[1]";
+  echo "<br />\n";
+}
+//-----------------------------------------------------------------------------------------------------------------------------------
+$arr = pg_fetch_array($result, 0, PGSQL_BOTH);
+echo $arr[0] . " <- Row 1 Author\n";
+pg_close($conn);
+\end{lstlisting}
+
+\end{document}

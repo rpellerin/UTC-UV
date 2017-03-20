@@ -1,0 +1,75 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, .87);
+}
+
+.err {
+	color: red;
+}
+.logout {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+	background-color: gray;
+	border-radius: 5px;
+	margin: 3px;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+table.answers {
+	border-collapse: collapse;
+}
+
+table.answers td {
+	padding: 5px;	
+}
+
+table.answers tr td label {
+	display: inline-block;
+	width: 100%;
+}
+
+a {
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  transition: .2s;
+}
+
+a:hover {
+  color: rgba(0, 0, 0, .54);
+}
+
+h3.question {
+	border-bottom: 1px solid grey;
+}
+
+div.answer {
+	margin-left: 40px;
+}
+
+div.submit {
+	text-align: center;
+}
+
+h1.score {
+	text-align: center;
+	color: red;
+	font-size: 3rem;
+}
+
+.greenRow {
+	background-color: green;
+}
+
+.redRow {
+	background-color: red;
+}

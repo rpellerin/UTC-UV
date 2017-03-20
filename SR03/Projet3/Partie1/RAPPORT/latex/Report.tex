@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper,twoside,french,svgnames]{report}
+\usepackage[utf8]{inputenc} % force the use of utf8
+\usepackage[T1]{fontenc} % font encoding, allows accents (T1 font encoding is an 8-bit encoding)
+\usepackage[top=2.5cm,bottom=2.5cm,outer=2.5cm,inner=2.5cm]{geometry} % http://tex.stackexchange.com/questions/62311/a4paper-where-should-i-declare-it-in-document-class-or-geometry // another option: papersize={21cm,29.7cm}
+\usepackage[french]{babel} % translate everything in the desired language: table of contents, etc. 'english' can be replaced with 'francais'
+\usepackage{graphicx} % images management
+\usepackage{wrapfig} % floating images
+\usepackage[format=plain,labelfont=bf,font=small,justification=centering,margin=10pt]{caption} % allow multiline captions in figures,
+\usepackage{float} % allow \begin{figure}[H] and \begin{table}[H] (to really force positionning, unlike h!)
+\usepackage{array} % allow arrays
+\usepackage[super]{nth} % allow to write \nth(1) to write 1st, etc
+\usepackage{fancyhdr} % headers/footers management (overrides empty, plain and headings)
+\usepackage{upquote} % without this, lslisting replace vertical singles quotes with curved ones
+\usepackage{listings} % code insertion (MUST BE WRITTEN AFTER BABEL)
+\usepackage[
+            backend=biber,
+            style=numeric,
+            sorting=none, % nty = name title year
+            url=true, % always show url when provided
+            ]{biblatex}
+%\usepackage{pdfpages} % include PDF documents
+\usepackage{enumitem} % for /setlist
+\usepackage{color,soul} % add some colors and hightlight
+\usepackage{xcolor} % more colors
+\usepackage{afterpage} % allow to execute command after the current page ends
+\usepackage[hidelinks,
+            colorlinks  = true, % no borders, colors enabled
+            anchorcolor = blue,
+            linkcolor   = black, % links in table of contents
+            urlcolor    = blue,
+            citecolor   = blue,
+            breaklinks  = true]{hyperref}
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+
+% List settings
+\setlist{itemsep=.5em}
+\setlist[itemize,2]{label={$\bullet$}} % use bullets for nested itemize in level 2
+
+\input{config/listings}
+\input{config/chapters}
+\input{config/fancyhdr} % To be edited to change the header and footer
+
+\title{Rapport de TD}
+\author{Steve LAGACHE et Romain PELLERIN}
+\date\today
+\setcounter{tocdepth}{2} % ToC depth
+
+\pagenumbering{arabic} % re-enable numering
+
+\begin{document}
+\input{templates/frontcover}
+
+\tableofcontents
+
+\input{contenu}
+
+%\input{conclusion}
+\end{document}

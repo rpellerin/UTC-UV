@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice" xmlns:intf="http://webservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservice" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getCategory">
+    <complexType>
+     <sequence>
+      <element name="category_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCategoryResponse">
+    <complexType>
+     <sequence>
+      <element name="getCategoryReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createCategory">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createCategoryResponse">
+    <complexType>
+     <sequence>
+      <element name="createCategoryReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteAd">
+    <complexType>
+     <sequence>
+      <element name="annonce_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteAdResponse">
+    <complexType>
+     <sequence>
+      <element name="deleteAdReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateAd">
+    <complexType>
+     <sequence>
+      <element name="annonce_id" type="xsd:int"/>
+      <element name="name" type="xsd:string"/>
+      <element name="categorie_id" type="xsd:int"/>
+      <element name="rue" type="xsd:string"/>
+      <element name="ville" type="xsd:string"/>
+      <element name="codepostal" type="xsd:string"/>
+      <element name="telephone" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateAdResponse">
+    <complexType>
+     <sequence>
+      <element name="updateAdReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllAd">
+    <complexType/>
+   </element>
+   <element name="getAllAdResponse">
+    <complexType>
+     <sequence>
+      <element name="getAllAdReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAd">
+    <complexType>
+     <sequence>
+      <element name="annonce_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAdResponse">
+    <complexType>
+     <sequence>
+      <element name="getAdReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteCategorie">
+    <complexType>
+     <sequence>
+      <element name="categorie_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteCategorieResponse">
+    <complexType>
+     <sequence>
+      <element name="deleteCategorieReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateCategorie">
+    <complexType>
+     <sequence>
+      <element name="categorie_id" type="xsd:int"/>
+      <element name="name" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateCategorieResponse">
+    <complexType>
+     <sequence>
+      <element name="updateCategorieReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllCategorie">
+    <complexType/>
+   </element>
+   <element name="getAllCategorieResponse">
+    <complexType>
+     <sequence>
+      <element name="getAllCategorieReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createAd">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+      <element name="categorie_id" type="xsd:int"/>
+      <element name="rue" type="xsd:string"/>
+      <element name="ville" type="xsd:string"/>
+      <element name="codepostal" type="xsd:string"/>
+      <element name="telephone" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createAdResponse">
+    <complexType>
+     <sequence>
+      <element name="createAdReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="updateCategorieResponse">
+
+      <wsdl:part element="impl:updateCategorieResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCategoryResponse">
+
+      <wsdl:part element="impl:getCategoryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createCategoryResponse">
+
+      <wsdl:part element="impl:createCategoryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createCategoryRequest">
+
+      <wsdl:part element="impl:createCategory" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateAdRequest">
+
+      <wsdl:part element="impl:updateAd" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAdRequest">
+
+      <wsdl:part element="impl:createAd" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAdRequest">
+
+      <wsdl:part element="impl:deleteAd" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAdResponse">
+
+      <wsdl:part element="impl:getAllAdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdRequest">
+
+      <wsdl:part element="impl:getAd" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateAdResponse">
+
+      <wsdl:part element="impl:updateAdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAdResponse">
+
+      <wsdl:part element="impl:createAdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAdResponse">
+
+      <wsdl:part element="impl:deleteAdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllCategorieResponse">
+
+      <wsdl:part element="impl:getAllCategorieResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateCategorieRequest">
+
+      <wsdl:part element="impl:updateCategorie" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAdRequest">
+
+      <wsdl:part element="impl:getAllAd" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdResponse">
+
+      <wsdl:part element="impl:getAdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCategoryRequest">
+
+      <wsdl:part element="impl:getCategory" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteCategorieResponse">
+
+      <wsdl:part element="impl:deleteCategorieResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteCategorieRequest">
+
+      <wsdl:part element="impl:deleteCategorie" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllCategorieRequest">
+
+      <wsdl:part element="impl:getAllCategorie" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AdminAPI">
+
+      <wsdl:operation name="getCategory">
+
+         <wsdl:input message="impl:getCategoryRequest" name="getCategoryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCategoryResponse" name="getCategoryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createCategory">
+
+         <wsdl:input message="impl:createCategoryRequest" name="createCategoryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createCategoryResponse" name="createCategoryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAd">
+
+         <wsdl:input message="impl:deleteAdRequest" name="deleteAdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteAdResponse" name="deleteAdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateAd">
+
+         <wsdl:input message="impl:updateAdRequest" name="updateAdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateAdResponse" name="updateAdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAd">
+
+         <wsdl:input message="impl:getAllAdRequest" name="getAllAdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllAdResponse" name="getAllAdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAd">
+
+         <wsdl:input message="impl:getAdRequest" name="getAdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAdResponse" name="getAdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteCategorie">
+
+         <wsdl:input message="impl:deleteCategorieRequest" name="deleteCategorieRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteCategorieResponse" name="deleteCategorieResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateCategorie">
+
+         <wsdl:input message="impl:updateCategorieRequest" name="updateCategorieRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateCategorieResponse" name="updateCategorieResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllCategorie">
+
+         <wsdl:input message="impl:getAllCategorieRequest" name="getAllCategorieRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllCategorieResponse" name="getAllCategorieResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAd">
+
+         <wsdl:input message="impl:createAdRequest" name="createAdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createAdResponse" name="createAdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AdminAPISoapBinding" type="impl:AdminAPI">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getCategory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCategoryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCategoryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createCategory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createCategoryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createCategoryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAd">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteAdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteAdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateAd">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateAdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateAdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAd">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllAdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllAdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAd">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteCategorie">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteCategorieRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteCategorieResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateCategorie">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateCategorieRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateCategorieResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllCategorie">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllCategorieRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllCategorieResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAd">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createAdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createAdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AdminAPIService">
+
+      <wsdl:port binding="impl:AdminAPISoapBinding" name="AdminAPI">
+
+         <wsdlsoap:address location="http://localhost:8080/Projet3/services/AdminAPI"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

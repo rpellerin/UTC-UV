@@ -1,0 +1,47 @@
+// ON DOIT DECLARER LES FONCTIONS EN HAUT
+
+pour carre :c
+repete 3 [ rends 1 ]
+tantque 1 == 1 [ rends 300 ]
+si :c > 100 [ rends :c ] [rends 100 ]
+rends 10
+fin
+av carre 1
+/////////////////////////////////////
+pour functionhaz :val
+	rends hasard :val
+fin
+
+pour maison
+fcc functionhaz 3
+ av 100 td 30 av 100
+ td 120 av 100 td 120
+ av 100 tg 135
+ av 141 tg 135
+ av 100 tg 135
+ av 141 tg 135
+ av 100 tg 90
+fin
+
+repete 30 [ maison td 12]
+/////////////////////////////////////
+fcc 0
+repete 180
+[ repete 4 [av 80 td 90 ] td 2 ]
+fpos [350 500 ]
+/////////////////////////////////////
+pour carre :c
+fcc 2
+tantque 1 == 1 [ rends 20 ]
+td 90
+fcc 0
+av 50
+si :c > 100 [ rends :c ] [rends 100 ]
+rends 10
+fin
+
+fpos [100 250 ]
+donne "nb 10
+av (carre 1) * (:nb)
+td 90 
+av 200

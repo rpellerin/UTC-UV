@@ -1,0 +1,182 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="/home/romain/workspace_eclipse/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Projet3/WEB-INF/attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:service name="Annuaire" provider="java:RPC" style="wrapped" use="literal">
+  <ns2:operation name="getCategory" qname="ns1:getCategory" returnQName="ns1:getCategoryReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:category_id" type="xsd:int"/>
+  </ns2:operation>
+  <ns1:operation name="createCategory" qname="ns2:createCategory" returnQName="ns2:createCategoryReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:name" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getAllCategorie" qname="ns3:getAllCategorie" returnQName="ns3:getAllCategorieReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateCategorie" qname="ns4:updateCategorie" returnQName="ns4:updateCategorieReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:categorie_id" type="xsd:int"/>
+   <ns1:parameter qname="ns4:name" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="deleteCategorie" qname="ns5:deleteCategorie" returnQName="ns5:deleteCategorieReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:categorie_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="updateCategorie getCategory deleteCategorie createCategory getAllCategorie"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="Annuaire"/>
+  <ns1:parameter name="className" value="webservice.Annuaire"/>
+  <ns1:parameter name="wsdlServicePort" value="Annuaire"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice"/>
+  <ns1:parameter name="wsdlServiceElement" value="AnnuaireService"/>
+ </ns1:service>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:service name="ClientAPI" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="getByParams" qname="ns6:getByParams" returnQName="ns6:getByParamsReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:name" type="xsd:string"/>
+   <ns1:parameter qname="ns6:categoryName" type="xsd:string"/>
+   <ns1:parameter qname="ns6:street" type="xsd:string"/>
+   <ns1:parameter qname="ns6:city" type="xsd:string"/>
+   <ns1:parameter qname="ns6:postcode" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="getByParams"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="ClientAPI"/>
+  <ns1:parameter name="className" value="webservice.ClientAPI"/>
+  <ns1:parameter name="wsdlServicePort" value="ClientAPI"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice"/>
+  <ns1:parameter name="wsdlServiceElement" value="ClientAPIService"/>
+ </ns1:service>
+ <ns1:service name="AdminAPI" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="getCategory" qname="ns7:getCategory" returnQName="ns7:getCategoryReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns7:category_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="createCategory" qname="ns8:createCategory" returnQName="ns8:createCategoryReturn" returnType="xsd:string" soapAction="" xmlns:ns8="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns8:name" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="deleteAd" qname="ns9:deleteAd" returnQName="ns9:deleteAdReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:annonce_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="updateAd" qname="ns10:updateAd" returnQName="ns10:updateAdReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns10:annonce_id" type="xsd:int"/>
+   <ns1:parameter qname="ns10:name" type="xsd:string"/>
+   <ns1:parameter qname="ns10:categorie_id" type="xsd:int"/>
+   <ns1:parameter qname="ns10:rue" type="xsd:string"/>
+   <ns1:parameter qname="ns10:ville" type="xsd:string"/>
+   <ns1:parameter qname="ns10:codepostal" type="xsd:string"/>
+   <ns1:parameter qname="ns10:telephone" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getAllAd" qname="ns11:getAllAd" returnQName="ns11:getAllAdReturn" returnType="xsd:string" soapAction="" xmlns:ns11="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getAd" qname="ns12:getAd" returnQName="ns12:getAdReturn" returnType="xsd:string" soapAction="" xmlns:ns12="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns12:annonce_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="deleteCategorie" qname="ns13:deleteCategorie" returnQName="ns13:deleteCategorieReturn" returnType="xsd:string" soapAction="" xmlns:ns13="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns13:categorie_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="updateCategorie" qname="ns14:updateCategorie" returnQName="ns14:updateCategorieReturn" returnType="xsd:string" soapAction="" xmlns:ns14="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns14:categorie_id" type="xsd:int"/>
+   <ns1:parameter qname="ns14:name" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getAllCategorie" qname="ns15:getAllCategorie" returnQName="ns15:getAllCategorieReturn" returnType="xsd:string" soapAction="" xmlns:ns15="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="createAd" qname="ns16:createAd" returnQName="ns16:createAdReturn" returnType="xsd:string" soapAction="" xmlns:ns16="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns16:name" type="xsd:string"/>
+   <ns1:parameter qname="ns16:categorie_id" type="xsd:int"/>
+   <ns1:parameter qname="ns16:rue" type="xsd:string"/>
+   <ns1:parameter qname="ns16:ville" type="xsd:string"/>
+   <ns1:parameter qname="ns16:codepostal" type="xsd:string"/>
+   <ns1:parameter qname="ns16:telephone" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="updateCategorie getAd deleteAd getCategory deleteCategorie updateAd getAllAd createCategory getAllCategorie createAd"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="AdminAPI"/>
+  <ns1:parameter name="className" value="webservice.AdminAPI"/>
+  <ns1:parameter name="wsdlServicePort" value="AdminAPI"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice"/>
+  <ns1:parameter name="wsdlServiceElement" value="AdminAPIService"/>
+ </ns1:service>
+ <ns1:service name="Annonces" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="getAd" qname="ns17:getAd" returnQName="ns17:getAdReturn" returnType="xsd:string" soapAction="" xmlns:ns17="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns17:annonce_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="updateAd" qname="ns18:updateAd" returnQName="ns18:updateAdReturn" returnType="xsd:string" soapAction="" xmlns:ns18="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns18:annonce_id" type="xsd:int"/>
+   <ns1:parameter qname="ns18:name" type="xsd:string"/>
+   <ns1:parameter qname="ns18:categorie_id" type="xsd:int"/>
+   <ns1:parameter qname="ns18:rue" type="xsd:string"/>
+   <ns1:parameter qname="ns18:ville" type="xsd:string"/>
+   <ns1:parameter qname="ns18:codepostal" type="xsd:string"/>
+   <ns1:parameter qname="ns18:telephone" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getAllAd" qname="ns19:getAllAd" returnQName="ns19:getAllAdReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="createAd" qname="ns20:createAd" returnQName="ns20:createAdReturn" returnType="xsd:string" soapAction="" xmlns:ns20="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns20:name" type="xsd:string"/>
+   <ns1:parameter qname="ns20:categorie_id" type="xsd:int"/>
+   <ns1:parameter qname="ns20:rue" type="xsd:string"/>
+   <ns1:parameter qname="ns20:ville" type="xsd:string"/>
+   <ns1:parameter qname="ns20:codepostal" type="xsd:string"/>
+   <ns1:parameter qname="ns20:telephone" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="deleteAd" qname="ns21:deleteAd" returnQName="ns21:deleteAdReturn" returnType="xsd:string" soapAction="" xmlns:ns21="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns21:annonce_id" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="getByParams" qname="ns22:getByParams" returnQName="ns22:getByParamsReturn" returnType="xsd:string" soapAction="" xmlns:ns22="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns22:name" type="xsd:string"/>
+   <ns1:parameter qname="ns22:categoryName" type="xsd:string"/>
+   <ns1:parameter qname="ns22:street" type="xsd:string"/>
+   <ns1:parameter qname="ns22:city" type="xsd:string"/>
+   <ns1:parameter qname="ns22:postcode" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="getAd deleteAd updateAd getAllAd getByParams createAd"/>
+  <ns1:parameter name="wsdlPortType" value="Annonces"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice"/>
+  <ns1:parameter name="wsdlServicePort" value="Annonces"/>
+  <ns1:parameter name="className" value="webservice.Annonces"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice"/>
+  <ns1:parameter name="wsdlServiceElement" value="AnnoncesService"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>
